@@ -147,7 +147,8 @@ def video2summary(h5_dir,video_dir,output_dir):
     for idx1 in range(len(list(h5_res.keys()))):
         key = list(h5_res.keys())[idx1]
         summary = h5_res[key]['machine_summary'][...]
-        video_name = h5_res[key]['video_name'][()].split('/')[-1]
+        video_name = "curr_out"
+        # video_name = h5_res[key]['video_name'][()].split('/')[-1]
         fps = h5_res[key]['fps'][()]
         if not os.path.isdir(osp.join(output_dir, video_name)):
             os.mkdir(osp.join(output_dir, video_name))
