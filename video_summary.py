@@ -45,7 +45,7 @@ parser.add_argument('--width', type=int, default=640, help="frame width")
 parser.add_argument('--height', type=int, default=480, help="frame height")
 
 parser.add_argument('--train-data', action='store_true', help="")
-
+parser.add_argument('-p', '--percent', type=float, default=0.15, help="proportion of output summary")
 args = parser.parse_args()
 
 torch.manual_seed(args.seed)
@@ -117,8 +117,8 @@ def evaluate(model, dataset, test_keys, use_gpu):
             sum = 0
             for i in range(len(nfps)):
                 sum += nfps[i]
-
-            machine_summary = vsum_tool.generate_summary(probs, cps, num_frames, nfps, positions)
+            proportion_out_summary = args.percent
+            machine_summary = vsum_tool.generate_summary(probs, cps, num_frames, nfps, positions, proportion = proportion_out_summary)
             h5_res.create_dataset(key + '/score', data=probs)
             h5_res.create_dataset(key + '/machine_summary', data=machine_summary)
             h5_res.create_dataset(key + '/video_name', data=video_name)
